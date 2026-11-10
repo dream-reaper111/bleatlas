@@ -1,0 +1,5 @@
+# Architecture
+
+Inputs are either line-delimited JSON observations or optional Bleak advertisement events from BlueZ. The bounded parser normalizes addresses, service UUIDs, AD structures, manufacturer company IDs, RSSI, TX power, timestamps, and source provenance. SQLite retains local records and an operator supplied authorized device label table. Reports group by **observed address and declared address type**; they do not correlate randomized addresses. The inventory detects changed name, service UUIDs, manufacturer data, or TX power within that group. The median time between observed events is a capture gap, not a true advertisement interval. The dashboard is a read-only FastAPI application on loopback.
+
+The hardware interface is local to BLEAtlas. `capabilities()` reports adapter presence and HCI access separately; a successful scan still requires Bleak and BlueZ D-Bus access. Dedicated sniffers and SDR receivers are explicitly unsupported here. BLEAtlas receives host-visible advertisement events. It does not capture all over-the-air packets or connections.
